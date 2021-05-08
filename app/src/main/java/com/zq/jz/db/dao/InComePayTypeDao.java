@@ -16,4 +16,13 @@ public interface InComePayTypeDao {
 
     @Query("select * from income_pay_type")
     List<IncomePayType> getAllSync();
+
+    @Query("select * from income_pay_type where type = 2")
+    List<IncomePayType> getInComeSync();
+
+    @Query("select * from income_pay_type where type = 1")
+    List<IncomePayType> getPaySync();
+
+    @Query("select * from income_pay_type where type = :type")
+    List<IncomePayType> getFromType(int type);
 }

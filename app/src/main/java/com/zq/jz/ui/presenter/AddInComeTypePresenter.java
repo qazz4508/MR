@@ -19,7 +19,7 @@ public class AddInComeTypePresenter extends BasePresenter<AddInComeTypeContract.
 
     @Override
     public void showTypes() {
-        mDbModel.getIncomePage(new OnDBListener<List<InComeSection>>() {
+        mDbModel.getIncomePage(2, new OnDBListener<List<InComeSection>>() {
             @Override
             public void onSuccess(List<InComeSection> inComeSections) {
                 getView().onGetTypeSuccess(inComeSections);

@@ -67,7 +67,6 @@ public class AddInComeTypeActivity extends BaseMvpActivity implements AddInComeT
 
             @Override
             public void onRight() {
-
             }
         });
         mAddInComeTypeAdapter.setOnTypeClickListener(new AddInComeTypeAdapter.OnTypeClickListener() {

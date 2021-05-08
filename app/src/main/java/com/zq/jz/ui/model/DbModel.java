@@ -85,12 +85,12 @@ public class DbModel {
                 });
     }
 
-    public Disposable getIncomePage(OnDBListener<List<InComeSection>> listener) {
+    public Disposable getIncomePage(int type, OnDBListener<List<InComeSection>> listener) {
         return Observable.create(new ObservableOnSubscribe<List<InComeSection>>() {
             @Override
             public void subscribe(@NonNull ObservableEmitter<List<InComeSection>> emitter) throws Exception {
                 List<InComeSection> list = new ArrayList<>();
-                List<IncomePayType> types = mInComeTypeDao.getAllSync();
+                List<IncomePayType> types = mInComeTypeDao.getFromType(type);
                 for (IncomePayType incomeType : types) {
                     InComeSection head = new InComeSection(true, incomeType.getName());
                     list.add(head);
