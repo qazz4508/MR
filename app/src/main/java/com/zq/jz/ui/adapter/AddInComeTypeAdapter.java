@@ -60,6 +60,10 @@ public class AddInComeTypeAdapter extends BaseSectionQuickAdapter<InComeSection,
         }
     }
 
+    public InComePay getSelect(){
+        return getData().get(mSelectPosition).t;
+    }
+
     public interface OnTypeClickListener{
         void onTypeClick(int position, InComePay inComePay);
     }

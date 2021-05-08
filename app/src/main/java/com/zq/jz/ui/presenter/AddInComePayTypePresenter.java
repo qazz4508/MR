@@ -13,17 +13,17 @@ import com.zq.jz.util.LogUtil;
 
 import java.util.List;
 
-public class AddPayTypePresenter extends BasePresenter<AddInComeTypeContract.View> implements AddInComeTypeContract.Presenter {
+public class AddInComePayTypePresenter extends BasePresenter<AddInComeTypeContract.View> implements AddInComeTypeContract.Presenter {
 
     private final DbModel mDbModel;
 
-    public AddPayTypePresenter() {
+    public AddInComePayTypePresenter() {
         mDbModel = new DbModel();
     }
 
     @Override
     public void showTypes() {
-        mDbModel.getIncomePage(1, new OnDBListener<List<InComeSection>>() {
+        mDbModel.getIncomePage(2, new OnDBListener<List<InComeSection>>() {
             @Override
             public void onSuccess(List<InComeSection> inComeSections) {
                 getView().onGetTypeSuccess(inComeSections);
@@ -44,7 +44,7 @@ public class AddPayTypePresenter extends BasePresenter<AddInComeTypeContract.Vie
     @Override
     public void insert(InComePay inComePay) {
         UserInComePayType userInComePayType = new UserInComePayType();
-        userInComePayType.setBillTypeId(1);
+        userInComePayType.setBillTypeId(2);
         userInComePayType.setTypeId(inComePay.getId());
         userInComePayType.setName(inComePay.getName());
         if (TextUtils.isEmpty(getView().getAnotherName())) {
@@ -52,15 +52,15 @@ public class AddPayTypePresenter extends BasePresenter<AddInComeTypeContract.Vie
         } else {
             userInComePayType.setAnotherName(getView().getAnotherName());
         }
-        mDbModel.insertUserType(userInComePayType, new OnDBListener() {
+        mDbModel.insertUserType(userInComePayType, new OnDBListener<String>() {
             @Override
-            public void onSuccess(Object o) {
+            public void onSuccess(String aLong) {
                 getView().onInsertSuccess();
             }
 
             @Override
             public void onError(String msg) {
-                LogUtil.log(msg);
+
             }
 
             @Override

@@ -4,12 +4,14 @@ import com.zq.jz.MyApplication;
 import com.zq.jz.bean.InComeSection;
 import com.zq.jz.db.dao.InComePayDao;
 import com.zq.jz.db.dao.InComePayTypeDao;
+import com.zq.jz.db.dao.UserInComePayTypeDao;
 import com.zq.jz.db.table.BillType;
 import com.zq.jz.db.dao.BillTypeDao;
 import com.zq.jz.db.JzDB;
 import com.zq.jz.db.listener.OnDBListener;
 import com.zq.jz.db.table.InComePay;
 import com.zq.jz.db.table.IncomePayType;
+import com.zq.jz.db.table.UserInComePayType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +31,14 @@ public class DbModel {
     private final BillTypeDao mBillTypeDao;
     private final InComePayTypeDao mInComeTypeDao;
     private final InComePayDao mInComeDao;
+    private final UserInComePayTypeDao mUserInComePayTypeDao;
 
     public DbModel() {
         mJzDB = JzDB.getInstance(MyApplication.getAppContext());
         mBillTypeDao = mJzDB.getBillTypeDao();
         mInComeTypeDao = mJzDB.getInComePayTypeDao();
         mInComeDao = mJzDB.getInComePayDao();
+        mUserInComePayTypeDao = mJzDB.getUserInComePayTypeDao();
     }
 
     public Disposable getBillTypes(OnDBListener<List<BillType>> listener) {
@@ -114,6 +118,45 @@ public class DbModel {
                         } else {
                             listener.onSuccess(inComeSections);
                         }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        listener.onError(throwable.getMessage());
+                    }
+                });
+    }
+
+    public Disposable insertUserType(UserInComePayType userInComePayType, OnDBListener<String> listener) {
+        return Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Exception {
+                mUserInComePayTypeDao.insert(userInComePayType);
+                emitter.onNext("succ");
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String o) throws Exception {
+                        listener.onSuccess(o);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        listener.onError(throwable.getMessage());
+                    }
+                });
+    }
+
+    public Disposable getUserType(int type, OnDBListener<List<UserInComePayType>> listener) {
+        return mUserInComePayTypeDao.getFromType(type)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<UserInComePayType>>() {
+                    @Override
+                    public void accept(List<UserInComePayType> userInComePayTypes) throws Exception {
+                        listener.onSuccess(userInComePayTypes);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

@@ -9,11 +9,14 @@ import com.zq.jz.R;
 import com.zq.jz.base.BaseMvpActivity;
 import com.zq.jz.base.BasePresenter;
 import com.zq.jz.bean.InComeSection;
+import com.zq.jz.db.listener.OnDBListener;
 import com.zq.jz.db.table.InComePay;
+import com.zq.jz.db.table.UserInComePayType;
 import com.zq.jz.ui.adapter.AddInComeTypeAdapter;
 import com.zq.jz.ui.contract.AddInComeTypeContract;
-import com.zq.jz.ui.presenter.AddInComeTypePresenter;
+import com.zq.jz.ui.model.DbModel;
 import com.zq.jz.ui.presenter.AddPayTypePresenter;
+import com.zq.jz.util.LogUtil;
 import com.zq.jz.widge.TitleBarView;
 
 import java.util.List;
@@ -70,6 +73,10 @@ public class AddPayTypeActivity extends BaseMvpActivity implements AddInComeType
 
             @Override
             public void onRight() {
+                InComePay select = mAddInComeTypeAdapter.getSelect();
+                if (select != null) {
+                    mAddPayTypePresenter.insert(select);
+                }
             }
         });
         mAddInComeTypeAdapter.setOnTypeClickListener(new AddInComeTypeAdapter.OnTypeClickListener() {
@@ -94,6 +101,16 @@ public class AddPayTypeActivity extends BaseMvpActivity implements AddInComeType
     @Override
     public void onGetTypeSuccess(List<InComeSection> list) {
         mAddInComeTypeAdapter.setData(list);
+    }
+
+    @Override
+    public void onInsertSuccess() {
+        finish();
+    }
+
+    @Override
+    public String getAnotherName() {
+        return mEditText.getText().toString().trim();
     }
 
     @Override

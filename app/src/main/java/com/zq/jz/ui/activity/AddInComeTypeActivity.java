@@ -12,7 +12,7 @@ import com.zq.jz.bean.InComeSection;
 import com.zq.jz.db.table.InComePay;
 import com.zq.jz.ui.adapter.AddInComeTypeAdapter;
 import com.zq.jz.ui.contract.AddInComeTypeContract;
-import com.zq.jz.ui.presenter.AddInComeTypePresenter;
+import com.zq.jz.ui.presenter.AddInComePayTypePresenter;
 import com.zq.jz.widge.TitleBarView;
 
 import java.util.List;
@@ -29,11 +29,11 @@ public class AddInComeTypeActivity extends BaseMvpActivity implements AddInComeT
     EditText mEditText;
 
     private AddInComeTypeAdapter mAddInComeTypeAdapter;
-    private AddInComeTypePresenter mAddInComeTypePresenter;
+    private AddInComePayTypePresenter mAddInComeTypePresenter;
 
     @Override
     protected void addPresenter(List<BasePresenter> presenterList) {
-        mAddInComeTypePresenter = new AddInComeTypePresenter();
+        mAddInComeTypePresenter = new AddInComePayTypePresenter();
         presenterList.add(mAddInComeTypePresenter);
     }
 
@@ -67,6 +67,7 @@ public class AddInComeTypeActivity extends BaseMvpActivity implements AddInComeT
 
             @Override
             public void onRight() {
+                mAddInComeTypePresenter.insert(mAddInComeTypeAdapter.getSelect());
             }
         });
         mAddInComeTypeAdapter.setOnTypeClickListener(new AddInComeTypeAdapter.OnTypeClickListener() {
@@ -91,6 +92,16 @@ public class AddInComeTypeActivity extends BaseMvpActivity implements AddInComeT
     @Override
     public void onGetTypeSuccess(List<InComeSection> list) {
         mAddInComeTypeAdapter.setData(list);
+    }
+
+    @Override
+    public void onInsertSuccess() {
+        finish();
+    }
+
+    @Override
+    public String getAnotherName() {
+        return mEditText.getText().toString().trim();
     }
 
     @Override
