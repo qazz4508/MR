@@ -3,5 +3,6 @@
     <string name="bookkeeping">记账</string>
     <string name="income_and_expenditure">收支情况</string>
     <string name="add_income_type">添加收入类别</string>
+    <string name="add_pay_type">添加支出类别</string>
     <string name="complete">完成</string>
 </resources>

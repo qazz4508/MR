@@ -36,6 +36,7 @@
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask" />
         <activity android:name=".ui.activity.AddInComeTypeActivity" />
+        <activity android:name=".ui.activity.AddPayTypeActivity"/>
     </application>
 
 </manifest>

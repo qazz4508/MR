@@ -50,6 +50,10 @@ public class TitleBarView extends FrameLayout {
         mTvRight.setText(mRightText);
     }
 
+    public void setTitle(String title) {
+        mTvTitle.setText(title);
+    }
+
     @OnClick(R.id.iv_back)
     public void onBackClick() {
         if (mOnBackListener != null) {

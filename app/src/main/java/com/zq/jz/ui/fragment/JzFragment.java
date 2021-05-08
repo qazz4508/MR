@@ -14,6 +14,7 @@ import com.zq.jz.bean.InComeSection;
 import com.zq.jz.db.listener.OnDBListener;
 import com.zq.jz.bean.HomeCardBean;
 import com.zq.jz.ui.activity.AddInComeTypeActivity;
+import com.zq.jz.ui.activity.AddPayTypeActivity;
 import com.zq.jz.ui.adapter.JzAdapter;
 import com.zq.jz.ui.contract.JzContract;
 import com.zq.jz.ui.model.DbModel;
@@ -97,7 +98,7 @@ public class JzFragment extends BaseMvpFragment implements JzContract.View {
 
     @OnClick(R.id.fab_add)
     public void add(){
-        Intent intent = new Intent(getContext(), AddInComeTypeActivity.class);
+        Intent intent = new Intent(getContext(), AddPayTypeActivity.class);
         startActivity(intent);
     }
 
