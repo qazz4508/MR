@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<!--    <com.zq.jz.widge.CountdownView-->
+<!--        android:id="@+id/cv"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        app:border_width="2dp"-->
+<!--        app:count_down_text="跳过"-->
+<!--        app:count_down_text_size="10sp"-->
+<!--        app:border_color="@color/primary"-->
+<!--        app:count_down_text_color="#666"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_icon"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@id/cl_text"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/iv_icon"
+        app:layout_constraintTop_toTopOf="@id/iv_icon"
+        app:layout_constraintBottom_toBottomOf="@id/iv_icon"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <TextView
+            android:id="@+id/tv_jz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333"
+            android:textSize="17sp"
+            android:text="记账"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_jt"
+            />
+        <TextView
+            android:id="@+id/tv_jt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#A8A8A8"
+            android:textSize="12sp"
+            android:layout_marginTop="2dp"
+            android:text="记录每一天"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_jz"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
