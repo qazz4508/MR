@@ -1,7 +1,6 @@
 package com.zq.jz.ui.activity;
 
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,7 +9,7 @@ import com.zq.jz.R;
 import com.zq.jz.base.BaseMvpActivity;
 import com.zq.jz.base.BasePresenter;
 import com.zq.jz.bean.InComeSection;
-import com.zq.jz.db.table.InCome;
+import com.zq.jz.db.table.InComePay;
 import com.zq.jz.ui.adapter.AddInComeTypeAdapter;
 import com.zq.jz.ui.contract.AddInComeTypeContract;
 import com.zq.jz.ui.presenter.AddInComeTypePresenter;
@@ -73,9 +72,9 @@ public class AddInComeTypeActivity extends BaseMvpActivity implements AddInComeT
         });
         mAddInComeTypeAdapter.setOnTypeClickListener(new AddInComeTypeAdapter.OnTypeClickListener() {
             @Override
-            public void onTypeClick(int position, InCome inCome) {
-                mEditText.setText(inCome.getName());
-                mEditText.setSelection(inCome.getName().length());
+            public void onTypeClick(int position, InComePay inComePay) {
+                mEditText.setText(inComePay.getName());
+                mEditText.setSelection(inComePay.getName().length());
             }
         });
     }

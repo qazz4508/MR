@@ -6,8 +6,7 @@ import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zq.jz.R;
 import com.zq.jz.bean.InComeSection;
-import com.zq.jz.db.table.InCome;
-import com.zq.jz.util.LogUtil;
+import com.zq.jz.db.table.InComePay;
 
 import java.util.List;
 
@@ -62,6 +61,6 @@ public class AddInComeTypeAdapter extends BaseSectionQuickAdapter<InComeSection,
     }
 
     public interface OnTypeClickListener{
-        void onTypeClick(int position, InCome inCome);
+        void onTypeClick(int position, InComePay inComePay);
     }
 }

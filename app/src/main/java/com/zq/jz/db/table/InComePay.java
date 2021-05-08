@@ -6,11 +6,11 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "income",
-        foreignKeys = {@ForeignKey(entity = IncomeType.class, parentColumns = "id", childColumns = "type")},
+@Entity(tableName = "income_pay",
+        foreignKeys = {@ForeignKey(entity = IncomePayType.class, parentColumns = "id", childColumns = "type")},
         indices = {@Index(name = "sy_income_type",unique = false,value = {"type"})}
 )
-public class InCome {
+public class InComePay {
     @PrimaryKey(autoGenerate = true)
     private int id;
 

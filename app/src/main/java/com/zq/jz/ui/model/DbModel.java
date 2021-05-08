@@ -2,14 +2,14 @@ package com.zq.jz.ui.model;
 
 import com.zq.jz.MyApplication;
 import com.zq.jz.bean.InComeSection;
-import com.zq.jz.db.dao.InComeDao;
-import com.zq.jz.db.dao.InComeTypeDao;
+import com.zq.jz.db.dao.InComePayDao;
+import com.zq.jz.db.dao.InComePayTypeDao;
 import com.zq.jz.db.table.BillType;
 import com.zq.jz.db.dao.BillTypeDao;
 import com.zq.jz.db.JzDB;
 import com.zq.jz.db.listener.OnDBListener;
-import com.zq.jz.db.table.InCome;
-import com.zq.jz.db.table.IncomeType;
+import com.zq.jz.db.table.InComePay;
+import com.zq.jz.db.table.IncomePayType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +27,14 @@ public class DbModel {
 
     private final JzDB mJzDB;
     private final BillTypeDao mBillTypeDao;
-    private final InComeTypeDao mInComeTypeDao;
-    private final InComeDao mInComeDao;
+    private final InComePayTypeDao mInComeTypeDao;
+    private final InComePayDao mInComeDao;
 
     public DbModel() {
         mJzDB = JzDB.getInstance(MyApplication.getAppContext());
-        mBillTypeDao = mJzDB.billTypeDao();
-        mInComeTypeDao = mJzDB.incomeTypeDao();
-        mInComeDao = mJzDB.incomeDao();
+        mBillTypeDao = mJzDB.getBillTypeDao();
+        mInComeTypeDao = mJzDB.getInComePayTypeDao();
+        mInComeDao = mJzDB.getInComePayDao();
     }
 
     public Disposable getBillTypes(OnDBListener<List<BillType>> listener) {
@@ -53,12 +53,12 @@ public class DbModel {
                 });
     }
 
-    public Disposable getIncomeTypes(OnDBListener<List<IncomeType>> listener) {
+    public Disposable getIncomeTypes(OnDBListener<List<IncomePayType>> listener) {
         return mInComeTypeDao.getAll().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<IncomeType>>() {
+                .subscribe(new Consumer<List<IncomePayType>>() {
                     @Override
-                    public void accept(List<IncomeType> billTypes) throws Exception {
+                    public void accept(List<IncomePayType> billTypes) throws Exception {
                         listener.onSuccess(billTypes);
                     }
                 }, new Consumer<Throwable>() {
@@ -69,12 +69,12 @@ public class DbModel {
                 });
     }
 
-    public Disposable getIncomes(OnDBListener<List<InCome>> listener) {
+    public Disposable getIncomes(OnDBListener<List<InComePay>> listener) {
         return mInComeDao.getAll().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<InCome>>() {
+                .subscribe(new Consumer<List<InComePay>>() {
                     @Override
-                    public void accept(List<InCome> billTypes) throws Exception {
+                    public void accept(List<InComePay> billTypes) throws Exception {
                         listener.onSuccess(billTypes);
                     }
                 }, new Consumer<Throwable>() {
@@ -90,13 +90,13 @@ public class DbModel {
             @Override
             public void subscribe(@NonNull ObservableEmitter<List<InComeSection>> emitter) throws Exception {
                 List<InComeSection> list = new ArrayList<>();
-                List<IncomeType> types = mInComeTypeDao.getAllSync();
-                for (IncomeType incomeType : types) {
+                List<IncomePayType> types = mInComeTypeDao.getAllSync();
+                for (IncomePayType incomeType : types) {
                     InComeSection head = new InComeSection(true, incomeType.getName());
                     list.add(head);
-                    List<InCome> inComes = mInComeDao.queryFromIdSync(incomeType.getId());
-                    for (InCome inCome : inComes) {
-                        InComeSection income = new InComeSection(inCome);
+                    List<InComePay> inComePays = mInComeDao.queryFromIdSync(incomeType.getId());
+                    for (InComePay inComePay : inComePays) {
+                        InComeSection income = new InComeSection(inComePay);
                         list.add(income);
                     }
                 }

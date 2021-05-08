@@ -8,14 +8,14 @@ import androidx.room.RoomDatabase;
 
 import com.zq.jz.db.dao.BillDao;
 import com.zq.jz.db.dao.BillTypeDao;
-import com.zq.jz.db.dao.InComeDao;
-import com.zq.jz.db.dao.InComeTypeDao;
+import com.zq.jz.db.dao.InComePayDao;
+import com.zq.jz.db.dao.InComePayTypeDao;
 import com.zq.jz.db.table.BillBean;
 import com.zq.jz.db.table.BillType;
-import com.zq.jz.db.table.InCome;
-import com.zq.jz.db.table.IncomeType;
+import com.zq.jz.db.table.InComePay;
+import com.zq.jz.db.table.IncomePayType;
 
-@Database(entities = {BillType.class, BillBean.class, IncomeType.class, InCome.class}, version = 1, exportSchema = false)
+@Database(entities = {BillType.class, BillBean.class, IncomePayType.class, InComePay.class}, version = 1, exportSchema = false)
 public abstract class JzDB extends RoomDatabase {
 
     private static volatile JzDB INSTANCE;
@@ -36,7 +36,7 @@ public abstract class JzDB extends RoomDatabase {
     }
 
     public abstract BillDao billDao();
-    public abstract BillTypeDao billTypeDao();
-    public abstract InComeTypeDao incomeTypeDao();
-    public abstract InComeDao incomeDao();
+    public abstract BillTypeDao getBillTypeDao();
+    public abstract InComePayTypeDao getInComePayTypeDao();
+    public abstract InComePayDao getInComePayDao();
 }

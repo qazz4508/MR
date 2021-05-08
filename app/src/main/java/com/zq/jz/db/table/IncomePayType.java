@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey;
 
 import io.reactivex.annotations.NonNull;
 
-@Entity(tableName = "income_type")
-public class IncomeType {
+@Entity(tableName = "income_pay_type")
+public class IncomePayType {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
