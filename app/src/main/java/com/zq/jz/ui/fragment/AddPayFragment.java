@@ -11,12 +11,15 @@ import com.zq.jz.R;
 import com.zq.jz.base.BaseMvpFragment;
 import com.zq.jz.base.BasePresenter;
 import com.zq.jz.bean.UserIncomePayTypeMultipleItem;
+import com.zq.jz.bean.event.EventUserIncomePaySelect;
+import com.zq.jz.db.table.UserInComePayType;
 import com.zq.jz.ui.activity.AddInComeTypeActivity;
 import com.zq.jz.ui.activity.AddPayTypeActivity;
 import com.zq.jz.ui.adapter.UserIncomePayTypeAdapter;
 import com.zq.jz.ui.contract.UserIncomePayTypeContract;
 import com.zq.jz.ui.presenter.UserIncomePayTypePresenter;
-import com.zq.jz.util.LogUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -67,6 +70,7 @@ public class AddPayFragment extends BaseMvpFragment implements UserIncomePayType
                         break;
                     case UserIncomePayTypeMultipleItem.TYPE_TYPE:
                         mUserIncomePayTypeAdapter.setSelectPosition(position);
+                        EventBus.getDefault().post(new EventUserIncomePaySelect(getCurrType()));
                         break;
                 }
             }
@@ -86,12 +90,17 @@ public class AddPayFragment extends BaseMvpFragment implements UserIncomePayType
     @Override
     public void onGetTypeSuccess(List<UserIncomePayTypeMultipleItem> list) {
         mUserIncomePayTypeAdapter.setNewData(list);
+        EventBus.getDefault().post(new EventUserIncomePaySelect(getCurrType()));
     }
 
     public void reloadData() {
         if (mUserIncomePayTypePresenter != null) {
             mUserIncomePayTypePresenter.getType();
         }
+    }
+
+    public UserInComePayType getCurrType() {
+        return mUserIncomePayTypeAdapter.getSelectItem();
     }
 
     @Override

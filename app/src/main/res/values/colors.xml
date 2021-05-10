@@ -9,6 +9,6 @@
     <color name="white">#FFFFFFFF</color>
 <!--    <color name="primary">#377ffc</color>-->
     <color name="primary">#E8243B</color>
-    <color name="indicator">#F0F0F0</color>
+    <color name="indicator">#F4F4F4</color>
     <color name="transparent">#00FFFFFF</color>
 </resources>

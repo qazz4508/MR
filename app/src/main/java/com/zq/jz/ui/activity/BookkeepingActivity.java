@@ -1,18 +1,26 @@
 package com.zq.jz.ui.activity;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.zq.jz.R;
 import com.zq.jz.base.BaseMvpActivity;
 import com.zq.jz.base.BasePresenter;
+import com.zq.jz.bean.event.EventUserIncomePaySelect;
+import com.zq.jz.db.table.UserInComePayType;
 import com.zq.jz.ui.adapter.FragmentAdapter;
 import com.zq.jz.ui.fragment.AddPayFragment;
 import com.zq.jz.ui.fragment.JzFragment;
 import com.zq.jz.util.LogUtil;
+import com.zq.jz.widge.CalculatorView;
 import com.zq.jz.widge.MyPagerIndicator;
 import com.zq.jz.widge.MyPagerTitleView;
 
@@ -21,6 +29,9 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +45,12 @@ public class BookkeepingActivity extends BaseMvpActivity {
     MagicIndicator mMagicIndicator;
     @BindView(R.id.vp)
     ViewPager2 mViewPager2;
+    @BindView(R.id.tv_type_name)
+    TextView mTvTypeName;
+    @BindView(R.id.cv)
+    CalculatorView mCalculatorView;
+    @BindView(R.id.et_result)
+    EditText mEtResult;
 
     private String[] mTitles = new String[]{"支出", "收入", "转账"};
     private List<Fragment> mFragments;
@@ -89,7 +106,17 @@ public class BookkeepingActivity extends BaseMvpActivity {
         mViewPager2.setAdapter(mFragmentAdapter);
     }
 
-    public static void bind(final MagicIndicator magicIndicator, ViewPager2 viewPager) {
+    @Override
+    protected void initListener() {
+        mCalculatorView.setListener(new CalculatorView.OnCalResultListener() {
+            @Override
+            public void onResult(String result) {
+                mEtResult.setText(result);
+            }
+        });
+    }
+
+    public void bind(final MagicIndicator magicIndicator, ViewPager2 viewPager) {
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -99,6 +126,14 @@ public class BookkeepingActivity extends BaseMvpActivity {
             @Override
             public void onPageSelected(int position) {
                 magicIndicator.onPageSelected(position);
+                if (mFragments.size() > 0 && mFragments.get(position) instanceof AddPayFragment) {
+                    UserInComePayType comePayType = ((AddPayFragment) mFragments.get(position)).getCurrType();
+                    if (null != comePayType) {
+                        onTypeSelectEvent(new EventUserIncomePaySelect(comePayType));
+                    }
+                } else {
+                    mTvTypeName.setText("转账");
+                }
             }
 
             @Override
@@ -108,12 +143,25 @@ public class BookkeepingActivity extends BaseMvpActivity {
         });
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onTypeSelectEvent(EventUserIncomePaySelect select) {
+        if (select.getUserInComePayType() != null) {
+            UserInComePayType userInComePayType = select.getUserInComePayType();
+            if (TextUtils.isEmpty(userInComePayType.getAnotherName())) {
+                mTvTypeName.setText(select.getUserInComePayType().getName());
+            } else {
+                mTvTypeName.setText(select.getUserInComePayType().getAnotherName());
+            }
+        }
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
         Fragment fragment = mFragments.get(mViewPager2.getCurrentItem());
-        if(fragment instanceof AddPayFragment){
-            ((AddPayFragment)fragment).reloadData();
+        if (fragment instanceof AddPayFragment) {
+            ((AddPayFragment) fragment).reloadData();
         }
     }
 
@@ -123,13 +171,17 @@ public class BookkeepingActivity extends BaseMvpActivity {
     }
 
     @OnClick(R.id.iv_back)
-    public void back(){
+    public void back() {
         finish();
     }
 
     @Override
     protected void initImmersionBar() {
-        super.initImmersionBar();
-        mImmersionBar.fitsSystemWindows(true).init();
+        mImmersionBar = ImmersionBar.with(this)
+                .statusBarDarkFont(true)
+                .fitsSystemWindows(true)
+                .navigationBarColor(R.color.white)
+                .navigationBarDarkIcon(true);
+        mImmersionBar.init();
     }
 }

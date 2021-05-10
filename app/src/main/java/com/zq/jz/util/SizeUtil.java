@@ -17,7 +17,7 @@ public class SizeUtil {
 
     public static int dip2px(float dpValue) {
         float scale = MyApplication.getAppContext().getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
+        return (int) (dpValue * scale );
     }
 
     /**

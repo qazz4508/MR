@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zq.jz.R;
 import com.zq.jz.bean.UserIncomePayTypeMultipleItem;
+import com.zq.jz.db.table.UserInComePayType;
 
 import java.util.List;
 
@@ -33,9 +34,9 @@ public class UserIncomePayTypeAdapter extends BaseMultiItemQuickAdapter<UserInco
                 } else {
                     helper.getView(R.id.iv_select).setVisibility(View.INVISIBLE);
                 }
-                if(TextUtils.isEmpty(item.getIncomePayType().getAnotherName())){
+                if (TextUtils.isEmpty(item.getIncomePayType().getAnotherName())) {
                     helper.setText(R.id.tv_name, item.getIncomePayType().getName());
-                }else {
+                } else {
                     helper.setText(R.id.tv_name, item.getIncomePayType().getAnotherName());
                 }
                 break;
@@ -48,5 +49,16 @@ public class UserIncomePayTypeAdapter extends BaseMultiItemQuickAdapter<UserInco
     public void setSelectPosition(int selectPosition) {
         mSelectPosition = selectPosition;
         notifyDataSetChanged();
+    }
+
+    public int getSelectPosition() {
+        return mSelectPosition;
+    }
+
+    public UserInComePayType getSelectItem() {
+        if (getData().size() > 0) {
+            return getData().get(getSelectPosition()).getIncomePayType();
+        }
+        return null;
     }
 }

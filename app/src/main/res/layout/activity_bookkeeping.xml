@@ -30,10 +30,11 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="18dp"
+        android:layout_marginEnd="24dp"
         android:gravity="center"
+        android:text="@string/complete"
         android:textColor="#666"
-        android:textSize="17sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_title"
@@ -51,12 +52,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_back" />
 
-    <androidx.viewpager2.widget.ViewPager2
+    <LinearLayout
+        android:id="@+id/ll_monty"
         android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="24dp"
+        android:background="#F4F4F4"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/magic_indicator">
+
+        <TextView
+            android:id="@+id/tv_type_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="end"
+            android:hint="0.00"
+            android:textColor="#666"
+            android:textColorHint="#CFCFCF"
+            android:textSize="26dp" />
+    </LinearLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/cv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_monty" />
+
+    <com.zq.jz.widge.CalculatorView
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/magic_indicator" />
+        app:layout_constraintTop_toBottomOf="@id/vp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
