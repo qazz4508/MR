@@ -1,8 +1,13 @@
 package com.zq.jz.ui.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,6 +20,7 @@ import com.zq.jz.R;
 import com.zq.jz.base.BaseMvpActivity;
 import com.zq.jz.base.BasePresenter;
 import com.zq.jz.bean.event.EventUserIncomePaySelect;
+import com.zq.jz.bean.event.EventUserTypeScroll;
 import com.zq.jz.db.table.UserInComePayType;
 import com.zq.jz.ui.adapter.FragmentAdapter;
 import com.zq.jz.ui.fragment.AddPayFragment;
@@ -57,6 +63,8 @@ public class BookkeepingActivity extends BaseMvpActivity {
     private String[] mTitles = new String[]{"支出", "收入", "转账"};
     private List<Fragment> mFragments;
     private FragmentAdapter mFragmentAdapter;
+    private boolean mAnimIng;
+    private boolean mCalShow = true;
 
     @Override
     protected void addPresenter(List<BasePresenter> presenterList) {
@@ -106,12 +114,12 @@ public class BookkeepingActivity extends BaseMvpActivity {
 
         mFragmentAdapter = new FragmentAdapter(this, mFragments);
         mViewPager2.setAdapter(mFragmentAdapter);
+        mViewPager2.setUserInputEnabled(false);
     }
 
     @Override
     protected void initListener() {
         mCalculatorView.setListener(new CalculatorView.OnCalResultListener() {
-
             @Override
             public void onResult(String processText, String result) {
                 mTvResult.setText(result);
@@ -132,7 +140,17 @@ public class BookkeepingActivity extends BaseMvpActivity {
 
             }
         });
+
+        mEtResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!mCalShow){
+                    onTypeScrollEvent(null);
+                }
+            }
+        });
     }
+
 
     public void bind(final MagicIndicator magicIndicator, ViewPager2 viewPager) {
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -171,6 +189,43 @@ public class BookkeepingActivity extends BaseMvpActivity {
                 mTvTypeName.setText(select.getUserInComePayType().getAnotherName());
             }
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onTypeScrollEvent(EventUserTypeScroll select) {
+        if (mAnimIng) {
+            return;
+        }
+        mCalculatorView.post(new Runnable() {
+            @Override
+            public void run() {
+                int height = mCalculatorView.getMeasuredHeight();
+                int start;
+                int end;
+                if (mCalShow) {
+                    start = 0;
+                    end = height;
+                } else {
+                    start = height;
+                    end = 0;
+                }
+                ObjectAnimator animator = ObjectAnimator.ofFloat(mCalculatorView, "translationY", start, end);
+                animator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mAnimIng = false;
+                        mCalShow = !mCalShow;
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        mAnimIng = true;
+                    }
+                });
+                animator.setDuration(500);
+                animator.start();
+            }
+        });
     }
 
 

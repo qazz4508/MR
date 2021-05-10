@@ -1,6 +1,8 @@
 package com.zq.jz.ui.fragment;
 
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,12 +14,14 @@ import com.zq.jz.base.BaseMvpFragment;
 import com.zq.jz.base.BasePresenter;
 import com.zq.jz.bean.UserIncomePayTypeMultipleItem;
 import com.zq.jz.bean.event.EventUserIncomePaySelect;
+import com.zq.jz.bean.event.EventUserTypeScroll;
 import com.zq.jz.db.table.UserInComePayType;
 import com.zq.jz.ui.activity.AddInComeTypeActivity;
 import com.zq.jz.ui.activity.AddPayTypeActivity;
 import com.zq.jz.ui.adapter.UserIncomePayTypeAdapter;
 import com.zq.jz.ui.contract.UserIncomePayTypeContract;
 import com.zq.jz.ui.presenter.UserIncomePayTypePresenter;
+import com.zq.jz.util.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -75,7 +79,50 @@ public class AddPayFragment extends BaseMvpFragment implements UserIncomePayType
                 }
             }
         });
+
+        GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.OnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent e) {
+
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                LogUtil.log("onScroll");
+                EventBus.getDefault().post(new EventUserTypeScroll());
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                return false;
+            }
+        });
+
+
+        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
     }
+
 
     @Override
     protected void loadData() {
@@ -100,7 +147,10 @@ public class AddPayFragment extends BaseMvpFragment implements UserIncomePayType
     }
 
     public UserInComePayType getCurrType() {
-        return mUserIncomePayTypeAdapter.getSelectItem();
+        if (mUserIncomePayTypeAdapter != null) {
+            return mUserIncomePayTypeAdapter.getSelectItem();
+        }
+        return null;
     }
 
     @Override

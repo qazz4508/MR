@@ -109,15 +109,31 @@ public class CalculatorView extends FrameLayout {
                         mListener.onResult(mResult, String.valueOf(calSub));
                         break;
                     case CalculatorMultiBean.TYPE_DELETE:
-                        mResult = mResult.substring(0, mResult.length() - 1);
-                        double calDelete = CalculatorUtil.cal(mResult);
-                        mListener.onResult(mResult, String.valueOf(calDelete));
+                        if (mResult.length() > 0) {
+                            mResult = mResult.substring(0, mResult.length() - 1);
+                            double calDelete = CalculatorUtil.cal(mResult);
+                            mListener.onResult(mResult, String.valueOf(calDelete));
+                            return;
+                        }
+                        mListener.onResult(mResult, mResult);
                         break;
                     case CalculatorMultiBean.TYPE_OK:
                         double calOk = CalculatorUtil.cal(mResult);
                         mListener.onOk(String.valueOf(calOk));
                         break;
                 }
+            }
+        });
+
+        calculatorAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                if (adapter.getItemViewType(position) == CalculatorMultiBean.TYPE_DELETE) {
+                    mResult = "";
+                    mListener.onResult(mResult, mResult);
+                    return true;
+                }
+                return false;
             }
         });
     }
