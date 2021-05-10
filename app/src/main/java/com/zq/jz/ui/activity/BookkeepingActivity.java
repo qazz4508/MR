@@ -1,6 +1,7 @@
 package com.zq.jz.ui.activity;
 
 import android.content.Context;
+import android.view.View;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
@@ -11,6 +12,7 @@ import com.zq.jz.base.BasePresenter;
 import com.zq.jz.ui.adapter.FragmentAdapter;
 import com.zq.jz.ui.fragment.AddPayFragment;
 import com.zq.jz.ui.fragment.JzFragment;
+import com.zq.jz.util.LogUtil;
 import com.zq.jz.widge.MyPagerIndicator;
 import com.zq.jz.widge.MyPagerTitleView;
 
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class BookkeepingActivity extends BaseMvpActivity {
 
@@ -44,9 +47,9 @@ public class BookkeepingActivity extends BaseMvpActivity {
     @Override
     protected void initData() {
         mFragments = new ArrayList<>();
-        mFragments.add(AddPayFragment.newInstance());
-        mFragments.add(AddPayFragment.newInstance());
-        mFragments.add(AddPayFragment.newInstance());
+        mFragments.add(AddPayFragment.newInstance(1));
+        mFragments.add(AddPayFragment.newInstance(2));
+        mFragments.add(AddPayFragment.newInstance(3));
     }
 
     @Override
@@ -65,6 +68,12 @@ public class BookkeepingActivity extends BaseMvpActivity {
             public IPagerTitleView getTitleView(Context context, final int index) {
                 MyPagerTitleView titleView = new MyPagerTitleView(context);
                 titleView.setText(mTitles[index]);
+                titleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mViewPager2.setCurrentItem(index);
+                    }
+                });
                 return titleView;
             }
 
@@ -100,8 +109,22 @@ public class BookkeepingActivity extends BaseMvpActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Fragment fragment = mFragments.get(mViewPager2.getCurrentItem());
+        if(fragment instanceof AddPayFragment){
+            ((AddPayFragment)fragment).reloadData();
+        }
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_bookkeeping;
+    }
+
+    @OnClick(R.id.iv_back)
+    public void back(){
+        finish();
     }
 
     @Override

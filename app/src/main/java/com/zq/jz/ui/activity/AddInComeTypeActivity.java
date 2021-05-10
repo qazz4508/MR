@@ -1,5 +1,7 @@
 package com.zq.jz.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.widget.EditText;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -30,6 +32,11 @@ public class AddInComeTypeActivity extends BaseMvpActivity implements AddInComeT
 
     private AddInComeTypeAdapter mAddInComeTypeAdapter;
     private AddInComePayTypePresenter mAddInComeTypePresenter;
+
+    public static void start(Context context){
+        Intent intent = new Intent(context, AddInComeTypeActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void addPresenter(List<BasePresenter> presenterList) {

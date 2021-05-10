@@ -4,11 +4,12 @@ import android.text.TextUtils;
 
 import com.zq.jz.base.BasePresenter;
 import com.zq.jz.bean.InComeSection;
-import com.zq.jz.db.listener.OnDBListener;
+import com.zq.jz.db.listener.OnGetDataListener;
 import com.zq.jz.db.table.InComePay;
 import com.zq.jz.db.table.UserInComePayType;
 import com.zq.jz.ui.contract.AddInComeTypeContract;
 import com.zq.jz.ui.model.DbModel;
+import com.zq.jz.ui.model.UserInfoModel;
 import com.zq.jz.util.LogUtil;
 
 import java.util.List;
@@ -16,14 +17,16 @@ import java.util.List;
 public class AddInComePayTypePresenter extends BasePresenter<AddInComeTypeContract.View> implements AddInComeTypeContract.Presenter {
 
     private final DbModel mDbModel;
+    private final UserInfoModel mUserInfoModel;
 
     public AddInComePayTypePresenter() {
         mDbModel = new DbModel();
+        mUserInfoModel = new UserInfoModel();
     }
 
     @Override
     public void showTypes() {
-        mDbModel.getIncomePage(2, new OnDBListener<List<InComeSection>>() {
+        mDbModel.getIncomePage(2, new OnGetDataListener<List<InComeSection>>() {
             @Override
             public void onSuccess(List<InComeSection> inComeSections) {
                 getView().onGetTypeSuccess(inComeSections);
@@ -52,7 +55,7 @@ public class AddInComePayTypePresenter extends BasePresenter<AddInComeTypeContra
         } else {
             userInComePayType.setAnotherName(getView().getAnotherName());
         }
-        mDbModel.insertUserType(userInComePayType, new OnDBListener<String>() {
+        mUserInfoModel.insertUserType(userInComePayType, new OnGetDataListener<String>() {
             @Override
             public void onSuccess(String aLong) {
                 getView().onInsertSuccess();

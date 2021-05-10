@@ -1,6 +1,6 @@
 package com.zq.jz.db.listener;
 
-public interface OnDBListener<T> {
+public interface OnGetDataListener<T> {
     void onSuccess(T t);
 
     void onError(String msg);
