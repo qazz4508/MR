@@ -51,6 +51,8 @@ public class BookkeepingActivity extends BaseMvpActivity {
     CalculatorView mCalculatorView;
     @BindView(R.id.et_result)
     EditText mEtResult;
+    @BindView(R.id.tv_result)
+    TextView mTvResult;
 
     private String[] mTitles = new String[]{"支出", "收入", "转账"};
     private List<Fragment> mFragments;
@@ -109,9 +111,25 @@ public class BookkeepingActivity extends BaseMvpActivity {
     @Override
     protected void initListener() {
         mCalculatorView.setListener(new CalculatorView.OnCalResultListener() {
+
             @Override
-            public void onResult(String result) {
-                mEtResult.setText(result);
+            public void onResult(String processText, String result) {
+                mTvResult.setText(result);
+                mEtResult.setText(processText);
+                if (processText.equals(result)) {
+                    mEtResult.setVisibility(View.VISIBLE);
+                    mEtResult.setTextSize(26);
+                    mTvResult.setVisibility(View.GONE);
+                } else {
+                    mEtResult.setVisibility(View.VISIBLE);
+                    mEtResult.setTextSize(12);
+                    mTvResult.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onOk(String resule) {
+
             }
         });
     }

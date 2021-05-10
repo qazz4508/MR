@@ -18,6 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zq.jz.R;
 import com.zq.jz.bean.CalculatorMultiBean;
+import com.zq.jz.util.CalculatorUtil;
 import com.zq.jz.util.SizeUtil;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class CalculatorView extends FrameLayout {
     RecyclerView mRecyclerView;
 
     private final int mSpace = SizeUtil.dip2px(1);
+
+    private String mResult = "";
 
     public CalculatorView(@NonNull Context context) {
         this(context, null);
@@ -75,19 +78,44 @@ public class CalculatorView extends FrameLayout {
                 int itemViewType = adapter.getItemViewType(position);
                 switch (itemViewType) {
                     case CalculatorMultiBean.TYPE_NUM:
-                        mListener.onResult(calculatorAdapter.getData().get(position).getText());
+                        mResult += calculatorAdapter.getData().get(position).getText();
+                        double cal = CalculatorUtil.cal(mResult);
+                        mListener.onResult(mResult, String.valueOf(cal));
                         break;
                     case CalculatorMultiBean.TYPE_POINT:
+                        if (mResult.endsWith(".")) {
+                            return;
+                        }
+                        mResult += ".";
+                        double calPoint = CalculatorUtil.cal(mResult);
+                        mListener.onResult(mResult, String.valueOf(calPoint));
                         break;
                     case CalculatorMultiBean.TYPE_NEW:
                         break;
                     case CalculatorMultiBean.TYPE_ADD:
+                        if (mResult.endsWith("+")) {
+                            return;
+                        }
+                        mResult += "+";
+                        double calAdd = CalculatorUtil.cal(mResult);
+                        mListener.onResult(mResult, String.valueOf(calAdd));
                         break;
                     case CalculatorMultiBean.TYPE_SUB:
+                        if (mResult.endsWith("-")) {
+                            return;
+                        }
+                        mResult += "-";
+                        double calSub = CalculatorUtil.cal(mResult);
+                        mListener.onResult(mResult, String.valueOf(calSub));
                         break;
                     case CalculatorMultiBean.TYPE_DELETE:
+                        mResult = mResult.substring(0, mResult.length() - 1);
+                        double calDelete = CalculatorUtil.cal(mResult);
+                        mListener.onResult(mResult, String.valueOf(calDelete));
                         break;
                     case CalculatorMultiBean.TYPE_OK:
+                        double calOk = CalculatorUtil.cal(mResult);
+                        mListener.onOk(String.valueOf(calOk));
                         break;
                 }
             }
@@ -202,7 +230,9 @@ public class CalculatorView extends FrameLayout {
         mListener = listener;
     }
 
-    public interface OnCalResultListener{
-        void onResult(String result);
+    public interface OnCalResultListener {
+        void onResult(String processText, String result);
+
+        void onOk(String resule);
     }
 }
