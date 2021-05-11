@@ -65,6 +65,7 @@ public class BookkeepingActivity extends BaseMvpActivity {
     private FragmentAdapter mFragmentAdapter;
     private boolean mAnimIng;
     private boolean mCalShow = true;
+    private ObjectAnimator mAnimator;
 
     @Override
     protected void addPresenter(List<BasePresenter> presenterList) {
@@ -144,7 +145,7 @@ public class BookkeepingActivity extends BaseMvpActivity {
         mEtResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mCalShow){
+                if (!mCalShow) {
                     onTypeScrollEvent(null);
                 }
             }
@@ -202,6 +203,9 @@ public class BookkeepingActivity extends BaseMvpActivity {
                 int height = mCalculatorView.getMeasuredHeight();
                 int start;
                 int end;
+                if(mAnimator!=null){
+                    return;
+                }
                 if (mCalShow) {
                     start = 0;
                     end = height;
@@ -209,12 +213,15 @@ public class BookkeepingActivity extends BaseMvpActivity {
                     start = height;
                     end = 0;
                 }
-                ObjectAnimator animator = ObjectAnimator.ofFloat(mCalculatorView, "translationY", start, end);
-                animator.addListener(new AnimatorListenerAdapter() {
+                LogUtil.log("s " + start);
+                LogUtil.log("e " + end);
+                mAnimator = ObjectAnimator.ofFloat(mCalculatorView, "translationY", start, end);
+                mAnimator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         mAnimIng = false;
                         mCalShow = !mCalShow;
+                        mAnimator = null;
                     }
 
                     @Override
@@ -222,8 +229,8 @@ public class BookkeepingActivity extends BaseMvpActivity {
                         mAnimIng = true;
                     }
                 });
-                animator.setDuration(500);
-                animator.start();
+                mAnimator.setDuration(500);
+                mAnimator.start();
             }
         });
     }
