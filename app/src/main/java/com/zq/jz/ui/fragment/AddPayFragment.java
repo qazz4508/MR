@@ -1,5 +1,6 @@
 package com.zq.jz.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -35,6 +36,7 @@ public class AddPayFragment extends BaseMvpFragment implements UserIncomePayType
     RecyclerView mRecyclerView;
     private UserIncomePayTypeAdapter mUserIncomePayTypeAdapter;
     private UserIncomePayTypePresenter mUserIncomePayTypePresenter;
+    private boolean mTouch;
 
     public static AddPayFragment newInstance(int pageType) {
         AddPayFragment addPayFragment = new AddPayFragment();
@@ -58,6 +60,7 @@ public class AddPayFragment extends BaseMvpFragment implements UserIncomePayType
         mRecyclerView.setAdapter(mUserIncomePayTypeAdapter);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void initListener() {
         mUserIncomePayTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -87,8 +90,7 @@ public class AddPayFragment extends BaseMvpFragment implements UserIncomePayType
             }
 
             @Override
-            public void onShowPress(MotionEvent e) {
-
+                public void onShowPress(MotionEvent e) {
             }
 
             @Override
@@ -98,7 +100,7 @@ public class AddPayFragment extends BaseMvpFragment implements UserIncomePayType
 
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                LogUtil.log("onScroll");
+                mTouch = true;
                 EventBus.getDefault().post(new EventUserTypeScroll());
                 return false;
             }
@@ -118,7 +120,15 @@ public class AddPayFragment extends BaseMvpFragment implements UserIncomePayType
         mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    mTouch = false;
+                    return true;
+                }else {
+                    if(mTouch){
+                        return true;
+                    }
+                    return gestureDetector.onTouchEvent(event);
+                }
             }
         });
     }

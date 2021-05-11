@@ -3,12 +3,14 @@ package com.zq.jz.ui.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -65,7 +67,7 @@ public class BookkeepingActivity extends BaseMvpActivity {
     private FragmentAdapter mFragmentAdapter;
     private boolean mAnimIng;
     private boolean mCalShow = true;
-    private ObjectAnimator mAnimator;
+    private ValueAnimator mValueAnimator;
 
     @Override
     protected void addPresenter(List<BasePresenter> presenterList) {
@@ -203,25 +205,31 @@ public class BookkeepingActivity extends BaseMvpActivity {
                 int height = mCalculatorView.getMeasuredHeight();
                 int start;
                 int end;
-                if(mAnimator!=null){
+                if (mValueAnimator != null) {
                     return;
                 }
                 if (mCalShow) {
                     start = 0;
-                    end = height;
+                    end = -height;
                 } else {
-                    start = height;
+                    start = -height;
                     end = 0;
                 }
-                LogUtil.log("s " + start);
-                LogUtil.log("e " + end);
-                mAnimator = ObjectAnimator.ofFloat(mCalculatorView, "translationY", start, end);
-                mAnimator.addListener(new AnimatorListenerAdapter() {
+                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) mCalculatorView.getLayoutParams();
+                mValueAnimator = ValueAnimator.ofInt(start, end);
+                mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        layoutParams.bottomMargin = (int) animation.getAnimatedValue();
+                        mCalculatorView.setLayoutParams(layoutParams);
+                    }
+                });
+                mValueAnimator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         mAnimIng = false;
                         mCalShow = !mCalShow;
-                        mAnimator = null;
+                        mValueAnimator = null;
                     }
 
                     @Override
@@ -229,8 +237,9 @@ public class BookkeepingActivity extends BaseMvpActivity {
                         mAnimIng = true;
                     }
                 });
-                mAnimator.setDuration(500);
-                mAnimator.start();
+
+                mValueAnimator.setDuration(300);
+                mValueAnimator.start();
             }
         });
     }
