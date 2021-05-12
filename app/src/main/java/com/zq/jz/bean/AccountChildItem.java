@@ -24,4 +24,11 @@ public class AccountChildItem implements MultiItemEntity {
     public int getItemType() {
         return TYPE_L1;
     }
+
+    @Override
+    public String toString() {
+        return "AccountChildItem{" +
+                "mAccount=" + mAccount +
+                '}';
+    }
 }

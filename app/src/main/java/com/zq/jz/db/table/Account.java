@@ -7,10 +7,12 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "account",
         foreignKeys = {@ForeignKey(entity = AccountType.class,parentColumns = "id",childColumns = "type_id")},
         indices = {@Index(name = "sy_account_type_id",value = "type_id")})
-public class Account {
+public class Account implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -44,5 +46,14 @@ public class Account {
 
     public void setTypeId(int typeId) {
         this.typeId = typeId;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", typeId=" + typeId +
+                '}';
     }
 }

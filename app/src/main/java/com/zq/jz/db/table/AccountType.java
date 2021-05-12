@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "account_type")
-public class AccountType {
+public class AccountType implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;

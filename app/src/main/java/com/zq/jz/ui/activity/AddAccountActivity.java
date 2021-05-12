@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.zq.jz.R;
 import com.zq.jz.base.BaseMvpActivity;
 import com.zq.jz.base.BasePresenter;
+import com.zq.jz.bean.AccountChildItem;
 import com.zq.jz.bean.AccountExpandItem;
 import com.zq.jz.ui.adapter.AddAccountAdapter;
 import com.zq.jz.ui.contract.AddAccountContract;
@@ -69,16 +70,15 @@ public class AddAccountActivity extends BaseMvpActivity implements AddAccountCon
                         boolean expanded = expandItem.isExpanded();
                         if (expanded) {
                             mAddAccountAdapter.collapse(position, true);
-                            LogUtil.log("折叠");
                         } else {
                             mAddAccountAdapter.expand(position, true);
-                            LogUtil.log("展开");
                         }
                     } else {
-                        LogUtil.log("添加 l0");
+                        AddUserAccountActivity.start(AddAccountActivity.this, expandItem.getAccountType(), null);
                     }
                 } else {
-                    LogUtil.log("添加 l1");
+                    AccountChildItem accountChildItem = (AccountChildItem) mAddAccountAdapter.getData().get(position);
+                    AddUserAccountActivity.start(AddAccountActivity.this, null, accountChildItem.getAccount());
                 }
             }
         });

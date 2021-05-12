@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.zq.jz.widge.TitleBarView
+        android:id="@+id/tbv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
+
+        <TextView
+            android:id="@+id/tv_acc_name"
+            android:text="@string/account_name"
+            style="@style/add_user_account_left_text" />
+
+        <EditText
+            android:id="@+id/et_acc_name"
+            android:hint="@string/input_acc_name"
+            style="@style/add_user_account_edit" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
+
+        <TextView
+            android:id="@+id/tv_acc_over"
+            style="@style/add_user_account_left_text"
+            android:text="@string/account_balance"
+            />
+
+        <EditText
+            android:id="@+id/et_acc_over"
+            android:hint="@string/input_acc_over"
+            style="@style/add_user_account_edit"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
+
+        <TextView
+            android:id="@+id/tv_acc_type"
+            android:text="@string/account_type"
+            style="@style/add_user_account_left_text" />
+
+        <TextView
+            android:id="@+id/tv_acc_type_real"
+            style="@style/add_user_account_edit" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
+
+        <TextView
+            android:id="@+id/tv_remark"
+            android:text="@string/remark"
+            style="@style/add_user_account_left_text"
+            />
+
+        <EditText
+            android:id="@+id/et_remark"
+            style="@style/add_user_account_edit"
+            android:hint="@string/remark" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_btn"
+        android:gravity="center"
+        android:text="@string/save"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+</LinearLayout>
