@@ -8,6 +8,9 @@ import androidx.room.PrimaryKey;
 
 import io.reactivex.annotations.NonNull;
 
+/**
+ * 收入支出类型
+ */
 @Entity(tableName = "income_pay_type",
         foreignKeys = {@ForeignKey(entity = BillType.class,parentColumns = "id",childColumns = "type")},
         indices = {@Index(name = "sy_income_pay_type",value = "type")}

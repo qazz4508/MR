@@ -21,6 +21,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
+/**
+ * 添加支出类型
+ */
 public class AddPayTypeActivity extends BaseMvpActivity implements AddInComeTypeContract.View {
 
     @BindView(R.id.rv)

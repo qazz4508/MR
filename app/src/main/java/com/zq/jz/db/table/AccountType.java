@@ -6,6 +6,9 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+/**
+ * 父账户 账户类型
+ */
 @Entity(tableName = "account_type")
 public class AccountType implements Serializable {
 

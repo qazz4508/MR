@@ -19,6 +19,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 添加用户账户
+ */
 public class AddUserAccountActivity extends BaseMvpActivity implements AddUserAccountContract.View {
 
     @BindView(R.id.tbv)

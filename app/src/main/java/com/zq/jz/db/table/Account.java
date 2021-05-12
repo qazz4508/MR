@@ -9,6 +9,9 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+/**
+ * 子账户
+ */
 @Entity(tableName = "account",
         foreignKeys = {@ForeignKey(entity = AccountType.class,parentColumns = "id",childColumns = "type_id")},
         indices = {@Index(name = "sy_account_type_id",value = "type_id")})

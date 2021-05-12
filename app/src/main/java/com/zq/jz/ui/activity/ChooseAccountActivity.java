@@ -21,6 +21,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
+/**
+ * 选择账户
+ */
 public class ChooseAccountActivity extends BaseMvpActivity implements ChooseAccountContract.View {
 
     @BindView(R.id.title_view)

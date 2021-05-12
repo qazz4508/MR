@@ -3,6 +3,9 @@ package com.zq.jz.db.table;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * 类型 收入 支出
+ */
 @Entity(tableName = "bill_type")
 public class BillType {
     @PrimaryKey(autoGenerate = true)

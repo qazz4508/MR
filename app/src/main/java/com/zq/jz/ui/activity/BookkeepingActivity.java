@@ -47,6 +47,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 记账界面
+ */
 public class BookkeepingActivity extends BaseMvpActivity {
 
     @BindView(R.id.magic_indicator)

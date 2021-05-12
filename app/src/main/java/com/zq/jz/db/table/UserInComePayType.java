@@ -6,6 +6,9 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+/**
+ * 用户添加的收入支出类型
+ */
 @Entity(tableName = "user_income_pay_type",
         foreignKeys = {@ForeignKey(entity = InComePay.class,parentColumns = "id",childColumns = "type_id"),
         @ForeignKey(entity = BillType.class,parentColumns = "id",childColumns = "bill_type_id")},

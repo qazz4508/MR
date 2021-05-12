@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * 用户账户
+ */
 @Entity(tableName = "user_account")
 public class UserAccount {
     @PrimaryKey(autoGenerate = true)
