@@ -65,12 +65,12 @@ public class AddAccountActivity extends BaseMvpActivity implements AddAccountCon
                 int itemViewType = adapter.getItemViewType(position);
                 if (itemViewType == AccountExpandItem.TYPE_L0) {
                     AccountExpandItem expandItem = (AccountExpandItem) mAddAccountAdapter.getData().get(position);
-                    if (expandItem.getSubItems().size() > 0) {
-                        boolean expandable = mAddAccountAdapter.isExpandable(expandItem);
-                        if(expandable){
-                            mAddAccountAdapter.collapse(position,true);
+                    if (expandItem.hasSubItem()) {
+                        boolean expanded = expandItem.isExpanded();
+                        if (expanded) {
+                            mAddAccountAdapter.collapse(position, true);
                             LogUtil.log("折叠");
-                        }else {
+                        } else {
                             mAddAccountAdapter.expand(position, true);
                             LogUtil.log("展开");
                         }
@@ -97,5 +97,10 @@ public class AddAccountActivity extends BaseMvpActivity implements AddAccountCon
     @Override
     public void onGetAccountListSuccess(List<MultiItemEntity> list) {
         mAddAccountAdapter.setNewData(list);
+    }
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
     }
 }

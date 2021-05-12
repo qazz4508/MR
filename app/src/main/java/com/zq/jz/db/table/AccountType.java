@@ -1,5 +1,6 @@
 package com.zq.jz.db.table;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -9,6 +10,7 @@ public class AccountType {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @NonNull
     private String name;
 
     public int getId() {

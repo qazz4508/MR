@@ -25,7 +25,7 @@ public class AddAccountAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity
             case AccountExpandItem.TYPE_L0:
                 AccountExpandItem accountExpandItem = (AccountExpandItem) item;
                 helper.setText(R.id.tv_title, accountExpandItem.getAccountType().getName());
-                if(accountExpandItem.getSubItems().size()>0){
+                if(accountExpandItem.hasSubItem()){
                     helper.setText(R.id.tv_sub, accountExpandItem.getSubItemNameString());
                     helper.getView(R.id.iv_arrow).setVisibility(View.VISIBLE);
                 }else {

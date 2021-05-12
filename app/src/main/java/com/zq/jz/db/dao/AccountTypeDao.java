@@ -17,5 +17,5 @@ public interface AccountTypeDao {
     void insert(AccountType... types);
 
     @Query("select * from account_type")
-    Single<List<AccountType>> getAll();
+    List<AccountType> getAll();
 }

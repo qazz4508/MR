@@ -21,5 +21,5 @@ public interface AccountDao {
     Single<List<Account>> getAll();
 
     @Query("select * from account where type_id = :typeId")
-    Single<List<Account>> getFormType(int typeId);
+    List<Account> getFormType(int typeId);
 }

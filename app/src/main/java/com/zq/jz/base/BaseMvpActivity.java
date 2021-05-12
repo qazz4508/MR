@@ -78,6 +78,7 @@ public abstract class BaseMvpActivity extends AppCompatActivity implements BaseV
     protected void initImmersionBar() {
         mImmersionBar = ImmersionBar.with(this)
                 .statusBarDarkFont(true)
+                .fitsSystemWindows(true)
                 .transparentNavigationBar()
                 .navigationBarAlpha(0.01f)
                 .navigationBarDarkIcon(true);
