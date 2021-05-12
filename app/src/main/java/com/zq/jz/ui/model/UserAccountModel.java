@@ -3,11 +3,15 @@ package com.zq.jz.ui.model;
 import android.annotation.SuppressLint;
 
 import com.zq.jz.MyApplication;
+import com.zq.jz.bean.AccountBean;
 import com.zq.jz.db.JzDB;
 import com.zq.jz.db.dao.UserAccountDao;
 import com.zq.jz.db.listener.OnGetDataListener;
 import com.zq.jz.db.table.UserAccount;
 import com.zq.jz.ui.contract.AddUserAccountContract;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -42,6 +46,35 @@ public class UserAccountModel implements AddUserAccountContract.Model {
                     @Override
                     public void accept(String s) throws Exception {
                         listener.onSuccess(s);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        listener.onError(throwable.getMessage());
+                    }
+                });
+    }
+
+    public Disposable getUserAccount(OnGetDataListener<List<AccountBean>> listener) {
+        return Observable.create(new ObservableOnSubscribe<List<AccountBean>>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<List<AccountBean>> emitter) throws Exception {
+                List<AccountBean> accountBeans = new ArrayList<>();
+                List<UserAccount> all = mUserAccountDao.getAll();
+                for (UserAccount userAccount : all) {
+                    AccountBean accountBean = new AccountBean();
+                    accountBean.setUserAccount(userAccount);
+                    accountBeans.add(accountBean);
+                }
+
+                emitter.onNext(accountBeans);
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<AccountBean>>() {
+                    @Override
+                    public void accept(List<AccountBean> list) throws Exception {
+                        listener.onSuccess(list);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

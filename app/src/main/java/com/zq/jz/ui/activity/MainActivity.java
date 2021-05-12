@@ -1,19 +1,17 @@
 package com.zq.jz.ui.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.graphics.Color;
+
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.graphics.Color;
-import android.os.Bundle;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.zq.jz.R;
 import com.zq.jz.base.BaseMvpActivity;
 import com.zq.jz.base.BasePresenter;
 import com.zq.jz.ui.adapter.FragmentAdapter;
+import com.zq.jz.ui.fragment.AssetsFragment;
 import com.zq.jz.ui.fragment.JzFragment;
-import com.zq.jz.util.LogUtil;
 import com.zq.jz.widge.TabLayout;
 
 import java.util.ArrayList;
@@ -40,10 +38,11 @@ public class MainActivity extends BaseMvpActivity {
     protected void initView() {
         mFragments = new ArrayList<>();
         mFragments.add(JzFragment.newInstance());
-        mFragments.add(JzFragment.newInstance());
+        mFragments.add(AssetsFragment.newInstance());
 
         mFragmentAdapter = new FragmentAdapter(this, mFragments);
         mViewPager2.setAdapter(mFragmentAdapter);
+        mViewPager2.setCurrentItem(1);
     }
 
     @Override
@@ -65,6 +64,7 @@ public class MainActivity extends BaseMvpActivity {
     protected void initImmersionBar() {
         ImmersionBar.with(this)
                 .statusBarDarkFont(true)
+                .fitsSystemWindows(true)
                 .navigationBarColorInt(Color.WHITE)
                 .navigationBarDarkIcon(true).init();
     }

@@ -1,5 +1,7 @@
 package com.zq.jz.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +14,8 @@ import com.zq.jz.base.BaseMvpActivity;
 import com.zq.jz.base.BasePresenter;
 import com.zq.jz.bean.AccountChildItem;
 import com.zq.jz.bean.AccountExpandItem;
+import com.zq.jz.db.table.Account;
+import com.zq.jz.db.table.AccountType;
 import com.zq.jz.ui.adapter.ChooseAccountAdapter;
 import com.zq.jz.ui.contract.ChooseAccountContract;
 import com.zq.jz.ui.presenter.ChooseAccountPresenter;
@@ -33,6 +37,11 @@ public class ChooseAccountActivity extends BaseMvpActivity implements ChooseAcco
 
     private ChooseAccountPresenter mChooseAccountPresenter;
     private ChooseAccountAdapter mChooseAccountAdapter;
+
+    public static void start(Context context) {
+        Intent intent = new Intent(context, ChooseAccountActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void addPresenter(List<BasePresenter> presenterList) {

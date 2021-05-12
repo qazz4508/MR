@@ -8,11 +8,14 @@ import android.widget.TextView;
 import com.zq.jz.R;
 import com.zq.jz.base.BaseMvpActivity;
 import com.zq.jz.base.BasePresenter;
+import com.zq.jz.bean.event.EventAddNewUserAccount;
 import com.zq.jz.db.table.Account;
 import com.zq.jz.db.table.AccountType;
 import com.zq.jz.ui.contract.AddUserAccountContract;
 import com.zq.jz.ui.presenter.AddUserAccountPresenter;
 import com.zq.jz.widge.TitleBarView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class AddUserAccountActivity extends BaseMvpActivity implements AddUserAc
     EditText mEtRemark;
     @BindView(R.id.tv_acc_type_real)
     TextView mTvType;
+
     private AddUserAccountPresenter mAddUserAccountPresenter;
 
     public static void start(Context context, AccountType accountType, Account account) {
@@ -67,6 +71,7 @@ public class AddUserAccountActivity extends BaseMvpActivity implements AddUserAc
     @Override
     public void onInsertSuccess() {
         finish();
+        EventBus.getDefault().post(new EventAddNewUserAccount());
     }
 
     @Override
