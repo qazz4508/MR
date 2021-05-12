@@ -1,16 +1,14 @@
 package com.zq.jz.ui.model;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.zq.jz.bean.AccountExpandItem;
 import com.zq.jz.db.listener.OnGetDataListener;
-import com.zq.jz.ui.contract.AddAccountContract;
+import com.zq.jz.ui.contract.ChooseAccountContract;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 
-public class AddAccountModel implements AddAccountContract.Model {
+public class AddAccountModel implements ChooseAccountContract.Model {
 
     private final DbModel mDbModel;
 

@@ -1,6 +1,7 @@
 package com.zq.jz.base;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -83,6 +84,11 @@ public abstract class BaseMvpActivity extends AppCompatActivity implements BaseV
                 .navigationBarAlpha(0.01f)
                 .navigationBarDarkIcon(true);
         mImmersionBar.init();
+    }
+
+    @Override
+    public void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override

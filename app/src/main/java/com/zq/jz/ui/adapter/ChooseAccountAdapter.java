@@ -11,9 +11,9 @@ import com.zq.jz.bean.AccountExpandItem;
 
 import java.util.List;
 
-public class AddAccountAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
+public class ChooseAccountAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
 
-    public AddAccountAdapter(List<MultiItemEntity> data) {
+    public ChooseAccountAdapter(List<MultiItemEntity> data) {
         super(data);
         addItemType(AccountExpandItem.TYPE_L0, R.layout.item_add_accout_l0);
         addItemType(AccountExpandItem.TYPE_L1, R.layout.item_add_accout_l0);

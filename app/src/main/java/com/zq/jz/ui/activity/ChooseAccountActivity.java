@@ -12,30 +12,29 @@ import com.zq.jz.base.BaseMvpActivity;
 import com.zq.jz.base.BasePresenter;
 import com.zq.jz.bean.AccountChildItem;
 import com.zq.jz.bean.AccountExpandItem;
-import com.zq.jz.ui.adapter.AddAccountAdapter;
-import com.zq.jz.ui.contract.AddAccountContract;
-import com.zq.jz.ui.presenter.AddAccountPresenter;
-import com.zq.jz.util.LogUtil;
+import com.zq.jz.ui.adapter.ChooseAccountAdapter;
+import com.zq.jz.ui.contract.ChooseAccountContract;
+import com.zq.jz.ui.presenter.ChooseAccountPresenter;
 import com.zq.jz.widge.TitleBarView;
 
 import java.util.List;
 
 import butterknife.BindView;
 
-public class AddAccountActivity extends BaseMvpActivity implements AddAccountContract.View {
+public class ChooseAccountActivity extends BaseMvpActivity implements ChooseAccountContract.View {
 
     @BindView(R.id.title_view)
     TitleBarView mTitleBarView;
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
 
-    private AddAccountPresenter mAddAccountPresenter;
-    private AddAccountAdapter mAddAccountAdapter;
+    private ChooseAccountPresenter mChooseAccountPresenter;
+    private ChooseAccountAdapter mChooseAccountAdapter;
 
     @Override
     protected void addPresenter(List<BasePresenter> presenterList) {
-        mAddAccountPresenter = new AddAccountPresenter();
-        presenterList.add(mAddAccountPresenter);
+        mChooseAccountPresenter = new ChooseAccountPresenter();
+        presenterList.add(mChooseAccountPresenter);
     }
 
     @Override
@@ -43,8 +42,8 @@ public class AddAccountActivity extends BaseMvpActivity implements AddAccountCon
         mTitleBarView.setTitle("");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mAddAccountAdapter = new AddAccountAdapter(null);
-        mRecyclerView.setAdapter(mAddAccountAdapter);
+        mChooseAccountAdapter = new ChooseAccountAdapter(null);
+        mRecyclerView.setAdapter(mChooseAccountAdapter);
     }
 
     @Override
@@ -60,25 +59,25 @@ public class AddAccountActivity extends BaseMvpActivity implements AddAccountCon
 
             }
         });
-        mAddAccountAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mChooseAccountAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 int itemViewType = adapter.getItemViewType(position);
                 if (itemViewType == AccountExpandItem.TYPE_L0) {
-                    AccountExpandItem expandItem = (AccountExpandItem) mAddAccountAdapter.getData().get(position);
+                    AccountExpandItem expandItem = (AccountExpandItem) mChooseAccountAdapter.getData().get(position);
                     if (expandItem.hasSubItem()) {
                         boolean expanded = expandItem.isExpanded();
                         if (expanded) {
-                            mAddAccountAdapter.collapse(position, true);
+                            mChooseAccountAdapter.collapse(position, true);
                         } else {
-                            mAddAccountAdapter.expand(position, true);
+                            mChooseAccountAdapter.expand(position, true);
                         }
                     } else {
-                        AddUserAccountActivity.start(AddAccountActivity.this, expandItem.getAccountType(), null);
+                        AddUserAccountActivity.start(ChooseAccountActivity.this, expandItem.getAccountType(), null);
                     }
                 } else {
-                    AccountChildItem accountChildItem = (AccountChildItem) mAddAccountAdapter.getData().get(position);
-                    AddUserAccountActivity.start(AddAccountActivity.this, null, accountChildItem.getAccount());
+                    AccountChildItem accountChildItem = (AccountChildItem) mChooseAccountAdapter.getData().get(position);
+                    AddUserAccountActivity.start(ChooseAccountActivity.this, null, accountChildItem.getAccount());
                 }
             }
         });
@@ -86,17 +85,17 @@ public class AddAccountActivity extends BaseMvpActivity implements AddAccountCon
 
     @Override
     protected void loadData() {
-        mAddAccountPresenter.getAccountList();
+        mChooseAccountPresenter.getAccountList();
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_add_account;
+        return R.layout.activity_choose_account;
     }
 
     @Override
     public void onGetAccountListSuccess(List<MultiItemEntity> list) {
-        mAddAccountAdapter.setNewData(list);
+        mChooseAccountAdapter.setNewData(list);
     }
 
     @Override

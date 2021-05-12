@@ -9,7 +9,7 @@ import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 
-public interface AddAccountContract {
+public interface ChooseAccountContract {
     interface Model {
         Disposable getAccountList(OnGetDataListener<List<MultiItemEntity>> listener);
     }

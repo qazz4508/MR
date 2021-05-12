@@ -14,11 +14,9 @@ import java.util.List;
 
 public class UserIncomePayTypePresenter extends BasePresenter<UserIncomePayTypeContract.View> implements UserIncomePayTypeContract.Presenter {
 
-    private final UserInfoModel mUserInfoModel;
     private final UserIncomePayTypeModel mModel;
 
     public UserIncomePayTypePresenter() {
-        mUserInfoModel = new UserInfoModel();
         mModel = new UserIncomePayTypeModel();
     }
 

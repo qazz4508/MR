@@ -11,8 +11,7 @@ import com.zq.jz.base.BaseMvpFragment;
 import com.zq.jz.base.BasePresenter;
 import com.zq.jz.bean.BillMultipleItem;
 import com.zq.jz.bean.HomeCardBean;
-import com.zq.jz.ui.activity.AddAccountActivity;
-import com.zq.jz.ui.activity.BookkeepingActivity;
+import com.zq.jz.ui.activity.ChooseAccountActivity;
 import com.zq.jz.ui.adapter.JzAdapter;
 import com.zq.jz.ui.contract.JzContract;
 import com.zq.jz.ui.presenter.JzPresenter;
@@ -95,7 +94,7 @@ public class JzFragment extends BaseMvpFragment implements JzContract.View {
 
     @OnClick(R.id.fab_add)
     public void add(){
-        Intent intent = new Intent(getContext(), AddAccountActivity.class);
+        Intent intent = new Intent(getContext(), ChooseAccountActivity.class);
         startActivity(intent);
     }
 

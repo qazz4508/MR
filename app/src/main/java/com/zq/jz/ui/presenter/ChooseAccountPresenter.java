@@ -3,17 +3,17 @@ package com.zq.jz.ui.presenter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.zq.jz.base.BasePresenter;
 import com.zq.jz.db.listener.OnGetDataListener;
-import com.zq.jz.ui.contract.AddAccountContract;
+import com.zq.jz.ui.contract.ChooseAccountContract;
 import com.zq.jz.ui.model.AddAccountModel;
 import com.zq.jz.util.LogUtil;
 
 import java.util.List;
 
-public class AddAccountPresenter extends BasePresenter<AddAccountContract.View> implements AddAccountContract.Presenter {
+public class ChooseAccountPresenter extends BasePresenter<ChooseAccountContract.View> implements ChooseAccountContract.Presenter {
 
     private final AddAccountModel mModel;
 
-    public AddAccountPresenter() {
+    public ChooseAccountPresenter() {
         mModel = new AddAccountModel();
     }
 

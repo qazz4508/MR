@@ -38,7 +38,7 @@
         <activity android:name=".ui.activity.AddInComeTypeActivity" />
         <activity android:name=".ui.activity.AddPayTypeActivity"/>
         <activity android:name=".ui.activity.BookkeepingActivity" />
-        <activity android:name=".ui.activity.AddAccountActivity" />
+        <activity android:name=".ui.activity.ChooseAccountActivity" />
         <activity android:name=".ui.activity.AddUserAccountActivity" />
     </application>
 
