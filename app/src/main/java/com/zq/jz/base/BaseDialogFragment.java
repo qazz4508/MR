@@ -1,12 +1,15 @@
 package com.zq.jz.base;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -21,6 +24,18 @@ public abstract class BaseDialogFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+        Window window = dialog.getWindow();
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams attributes = window.getAttributes();
+        attributes.width = WindowManager.LayoutParams.MATCH_PARENT;
+        attributes.gravity = getGravity();
+        window.setAttributes(attributes);
     }
 
     @Nullable
@@ -75,5 +90,10 @@ public abstract class BaseDialogFragment extends DialogFragment {
     }
 
     protected abstract int getLayoutId();
+
+    protected int getGravity() {
+        return Gravity.CENTER;
+    }
+
 
 }

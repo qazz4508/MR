@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zq.jz.R;
 import com.zq.jz.bean.CalculatorMultiBean;
+import com.zq.jz.db.table.UserAccount;
 import com.zq.jz.util.CalculatorUtil;
 import com.zq.jz.util.SizeUtil;
 
@@ -26,14 +28,18 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CalculatorView extends FrameLayout {
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
+    @BindView(R.id.tv_account)
+    TextView mTvAccount;
 
     private final int mSpace = SizeUtil.dip2px(1);
 
     private String mResult = "";
+    private UserAccount mUserAccount;
 
     public CalculatorView(@NonNull Context context) {
         this(context, null);
@@ -138,6 +144,17 @@ public class CalculatorView extends FrameLayout {
         });
     }
 
+    @OnClick(R.id.tv_account)
+    public void onAccountClick() {
+        if (mListener != null) {
+            mListener.onSelectAccountClick();
+        }
+    }
+
+    public void setSelectAccount(UserAccount userAccount) {
+        mUserAccount = userAccount;
+        mTvAccount.setText(mUserAccount.getName());
+    }
 
     private List<CalculatorMultiBean> getData() {
         List<CalculatorMultiBean> list = new ArrayList<>();
@@ -250,5 +267,7 @@ public class CalculatorView extends FrameLayout {
         void onResult(String processText, String result);
 
         void onOk(String resule);
+
+        void onSelectAccountClick();
     }
 }

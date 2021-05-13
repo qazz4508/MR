@@ -34,7 +34,6 @@ public class AddInComePayTypePresenter extends BasePresenter<AddInComeTypeContra
 
             @Override
             public void onError(String msg) {
-                LogUtil.log(msg);
             }
 
             @Override

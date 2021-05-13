@@ -21,12 +21,17 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.zq.jz.R;
 import com.zq.jz.base.BaseMvpActivity;
 import com.zq.jz.base.BasePresenter;
+import com.zq.jz.bean.AccountBean;
 import com.zq.jz.bean.event.EventUserIncomePaySelect;
 import com.zq.jz.bean.event.EventUserTypeScroll;
+import com.zq.jz.db.table.UserAccount;
 import com.zq.jz.db.table.UserInComePayType;
 import com.zq.jz.ui.adapter.FragmentAdapter;
+import com.zq.jz.ui.contract.BookkeepingContract;
+import com.zq.jz.ui.dialog.AccountSelectDialog;
 import com.zq.jz.ui.fragment.AddPayFragment;
 import com.zq.jz.ui.fragment.JzFragment;
+import com.zq.jz.ui.presenter.BookkeepingPresenter;
 import com.zq.jz.util.LogUtil;
 import com.zq.jz.widge.CalculatorView;
 import com.zq.jz.widge.MyPagerIndicator;
@@ -50,7 +55,7 @@ import butterknife.OnClick;
 /**
  * 记账界面
  */
-public class BookkeepingActivity extends BaseMvpActivity {
+public class BookkeepingActivity extends BaseMvpActivity implements BookkeepingContract.View {
 
     @BindView(R.id.magic_indicator)
     MagicIndicator mMagicIndicator;
@@ -71,10 +76,12 @@ public class BookkeepingActivity extends BaseMvpActivity {
     private boolean mAnimIng;
     private boolean mCalShow = true;
     private ValueAnimator mValueAnimator;
+    private BookkeepingPresenter mBookkeepingPresenter;
 
     @Override
     protected void addPresenter(List<BasePresenter> presenterList) {
-
+        mBookkeepingPresenter = new BookkeepingPresenter();
+        presenterList.add(mBookkeepingPresenter);
     }
 
     @Override
@@ -145,6 +152,17 @@ public class BookkeepingActivity extends BaseMvpActivity {
             public void onOk(String resule) {
 
             }
+
+            @Override
+            public void onSelectAccountClick() {
+                AccountSelectDialog.show(getSupportFragmentManager(), new AccountSelectDialog.OnDialogListener() {
+                    @Override
+                    public void onSelect(AccountBean accountBean) {
+                        mCalculatorView.setSelectAccount(accountBean.getUserAccount());
+                        mBookkeepingPresenter.updateUserConfigSelectAccount(accountBean.getUserAccount().getId());
+                    }
+                });
+            }
         });
 
         mEtResult.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +175,10 @@ public class BookkeepingActivity extends BaseMvpActivity {
         });
     }
 
+    @Override
+    protected void loadData() {
+        mBookkeepingPresenter.getSelectAccount();
+    }
 
     public void bind(final MagicIndicator magicIndicator, ViewPager2 viewPager) {
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -275,5 +297,14 @@ public class BookkeepingActivity extends BaseMvpActivity {
                 .navigationBarColor(R.color.white)
                 .navigationBarDarkIcon(true);
         mImmersionBar.init();
+    }
+
+    @Override
+    public void onGetSelectAccountSuccess(UserAccount userAccount) {
+        if (userAccount == null) {
+            showToast("还没有创建账户");
+            return;
+        }
+        mCalculatorView.setSelectAccount(userAccount);
     }
 }

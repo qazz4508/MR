@@ -34,7 +34,6 @@ public class AddPayTypePresenter extends BasePresenter<AddInComeTypeContract.Vie
 
             @Override
             public void onError(String msg) {
-                LogUtil.log(msg);
             }
 
             @Override
@@ -63,7 +62,6 @@ public class AddPayTypePresenter extends BasePresenter<AddInComeTypeContract.Vie
 
             @Override
             public void onError(String msg) {
-                LogUtil.log(msg);
             }
 
             @Override

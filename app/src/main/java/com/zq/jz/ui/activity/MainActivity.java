@@ -42,7 +42,6 @@ public class MainActivity extends BaseMvpActivity {
 
         mFragmentAdapter = new FragmentAdapter(this, mFragments);
         mViewPager2.setAdapter(mFragmentAdapter);
-        mViewPager2.setCurrentItem(1);
     }
 
     @Override

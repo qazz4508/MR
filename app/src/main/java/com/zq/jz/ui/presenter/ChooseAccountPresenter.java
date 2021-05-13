@@ -4,17 +4,17 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.zq.jz.base.BasePresenter;
 import com.zq.jz.db.listener.OnGetDataListener;
 import com.zq.jz.ui.contract.ChooseAccountContract;
-import com.zq.jz.ui.model.AddAccountModel;
+import com.zq.jz.ui.model.ChooseAccountModel;
 import com.zq.jz.util.LogUtil;
 
 import java.util.List;
 
 public class ChooseAccountPresenter extends BasePresenter<ChooseAccountContract.View> implements ChooseAccountContract.Presenter {
 
-    private final AddAccountModel mModel;
+    private final ChooseAccountModel mModel;
 
     public ChooseAccountPresenter() {
-        mModel = new AddAccountModel();
+        mModel = new ChooseAccountModel();
     }
 
     @Override
@@ -23,13 +23,10 @@ public class ChooseAccountPresenter extends BasePresenter<ChooseAccountContract.
              @Override
              public void onSuccess(List<MultiItemEntity> multiItemEntities) {
                  getView().onGetAccountListSuccess(multiItemEntities);
-                 LogUtil.log("onSuccess");
-
              }
 
              @Override
              public void onError(String msg) {
-                 LogUtil.log(msg);
              }
 
              @Override

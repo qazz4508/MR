@@ -19,4 +19,10 @@ public interface UserAccountDao {
 
     @Query("select * from user_account")
     List<UserAccount> getAll();
+
+    @Query("select * from user_account where id=:id")
+    UserAccount getFromId(int id);
+
+    @Query("select * from user_account limit 1")
+    UserAccount getOne();
 }

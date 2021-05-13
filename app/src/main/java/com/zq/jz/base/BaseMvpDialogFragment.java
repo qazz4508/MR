@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,5 +66,9 @@ public abstract class BaseMvpDialogFragment extends BaseDialogFragment implement
                 mPresenters.remove(0);
             }
         }
+    }
+
+    @Subscribe
+    public void onEventMainThread(String event) {
     }
 }

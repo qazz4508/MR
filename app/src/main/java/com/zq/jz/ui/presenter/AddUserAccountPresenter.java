@@ -50,7 +50,6 @@ public class AddUserAccountPresenter extends BasePresenter<AddUserAccountContrac
 
             @Override
             public void onError(String msg) {
-                LogUtil.log(msg);
             }
 
             @Override

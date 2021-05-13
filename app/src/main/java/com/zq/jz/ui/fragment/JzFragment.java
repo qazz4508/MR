@@ -58,7 +58,6 @@ public class JzFragment extends BaseMvpFragment implements JzContract.View {
         DBUtil.copyDbFile(MyApplication.getAppContext(), "jz.db", new DBUtil.OnCopyListener() {
             @Override
             public void onComplete() {
-                LogUtil.log("comp");
             }
         });
     }

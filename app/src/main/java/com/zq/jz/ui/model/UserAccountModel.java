@@ -9,6 +9,7 @@ import com.zq.jz.db.dao.UserAccountDao;
 import com.zq.jz.db.listener.OnGetDataListener;
 import com.zq.jz.db.table.UserAccount;
 import com.zq.jz.ui.contract.AddUserAccountContract;
+import com.zq.jz.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +26,16 @@ import io.reactivex.schedulers.Schedulers;
 public class UserAccountModel implements AddUserAccountContract.Model {
 
     private final UserAccountDao mUserAccountDao;
+    private final UserConfigModel mUserConfigModel;
 
     public UserAccountModel() {
         JzDB jzDB = JzDB.getInstance(MyApplication.getAppContext());
         mUserAccountDao = jzDB.getUserAccountDao();
+        mUserConfigModel = new UserConfigModel();
+    }
+
+    public boolean hasAddAccount() {
+        return !mUserAccountDao.getAll().isEmpty();
     }
 
     @SuppressLint("CheckResult")
@@ -37,8 +44,13 @@ public class UserAccountModel implements AddUserAccountContract.Model {
         return Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Exception {
+                boolean hasAddAccount = hasAddAccount();
                 mUserAccountDao.insert(userAccount);
                 emitter.onNext("succ");
+                if (!hasAddAccount) {
+                    UserAccount one = mUserAccountDao.getOne();
+                    mUserConfigModel.updateSelectAccount(one.getId());
+                }
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

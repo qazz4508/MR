@@ -30,7 +30,6 @@ public class UserIncomePayTypePresenter extends BasePresenter<UserIncomePayTypeC
 
             @Override
             public void onError(String msg) {
-                LogUtil.log(msg);
             }
 
             @Override

@@ -8,11 +8,11 @@ import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 
-public class AddAccountModel implements ChooseAccountContract.Model {
+public class ChooseAccountModel implements ChooseAccountContract.Model {
 
     private final DbModel mDbModel;
 
-    public AddAccountModel() {
+    public ChooseAccountModel() {
         mDbModel = new DbModel();
     }
 
