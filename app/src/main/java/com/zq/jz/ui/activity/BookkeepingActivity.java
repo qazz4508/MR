@@ -29,6 +29,7 @@ import com.zq.jz.db.table.UserInComePayType;
 import com.zq.jz.ui.adapter.FragmentAdapter;
 import com.zq.jz.ui.contract.BookkeepingContract;
 import com.zq.jz.ui.dialog.AccountSelectDialog;
+import com.zq.jz.ui.dialog.CalendarDialog;
 import com.zq.jz.ui.fragment.AddPayFragment;
 import com.zq.jz.ui.fragment.JzFragment;
 import com.zq.jz.ui.presenter.BookkeepingPresenter;
@@ -47,6 +48,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -149,7 +151,7 @@ public class BookkeepingActivity extends BaseMvpActivity implements BookkeepingC
             }
 
             @Override
-            public void onOk(String resule) {
+            public void onOk(String result) {
 
             }
 
@@ -160,6 +162,16 @@ public class BookkeepingActivity extends BaseMvpActivity implements BookkeepingC
                     public void onSelect(AccountBean accountBean) {
                         mCalculatorView.setSelectAccount(accountBean.getUserAccount());
                         mBookkeepingPresenter.updateUserConfigSelectAccount(accountBean.getUserAccount().getId());
+                    }
+                });
+            }
+
+            @Override
+            public void onDateClick() {
+                CalendarDialog.show(getSupportFragmentManager(), mCalculatorView.getCalendar(), new CalendarDialog.OnCalendarListener() {
+                    @Override
+                    public void onDateSelect(Calendar calendar) {
+                        mCalculatorView.setDateText(calendar);
                     }
                 });
             }

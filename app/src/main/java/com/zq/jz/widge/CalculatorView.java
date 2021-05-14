@@ -21,9 +21,11 @@ import com.zq.jz.R;
 import com.zq.jz.bean.CalculatorMultiBean;
 import com.zq.jz.db.table.UserAccount;
 import com.zq.jz.util.CalculatorUtil;
+import com.zq.jz.util.DateUtil;
 import com.zq.jz.util.SizeUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,11 +37,14 @@ public class CalculatorView extends FrameLayout {
     RecyclerView mRecyclerView;
     @BindView(R.id.tv_account)
     TextView mTvAccount;
+    @BindView(R.id.tv_date)
+    TextView mTvDate;
 
     private final int mSpace = SizeUtil.dip2px(1);
 
     private String mResult = "";
     private UserAccount mUserAccount;
+    private Calendar mCalendar;
 
     public CalculatorView(@NonNull Context context) {
         this(context, null);
@@ -142,12 +147,27 @@ public class CalculatorView extends FrameLayout {
                 return false;
             }
         });
+
+        mCalendar = Calendar.getInstance();
+        setDateText(mCalendar);
+    }
+
+    public void setDateText(Calendar calendar) {
+        mCalendar = calendar;
+        mTvDate.setText(DateUtil.getYYYY_MM_DD(mCalendar));
     }
 
     @OnClick(R.id.tv_account)
     public void onAccountClick() {
         if (mListener != null) {
             mListener.onSelectAccountClick();
+        }
+    }
+
+    @OnClick(R.id.tv_date)
+    public void onDateClick() {
+        if (mListener != null) {
+            mListener.onDateClick();
         }
     }
 
@@ -257,6 +277,10 @@ public class CalculatorView extends FrameLayout {
         }
     }
 
+    public Calendar getCalendar() {
+        return mCalendar;
+    }
+
     private OnCalResultListener mListener;
 
     public void setListener(OnCalResultListener listener) {
@@ -266,8 +290,10 @@ public class CalculatorView extends FrameLayout {
     public interface OnCalResultListener {
         void onResult(String processText, String result);
 
-        void onOk(String resule);
+        void onOk(String result);
 
         void onSelectAccountClick();
+
+        void onDateClick();
     }
 }
